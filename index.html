@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino-Prash</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body>
+    <div class="conatiner">
+
+        <div class="score texture">Score:00</div>
+        <div class="higest_score texture">Higest Score:</div>
+        <div class="gameover">Game Over</div>
+        <button>Try Again</button>
+        <div class="player animategirl"></div>
+        <div class="villan villan_animation"></div>
+        <div class="cloudWithSun"></div>
+        <div class="tree1 tree1_animation"></div>
+        <div class="cactus cactus_animation"></div>
+
+    </div>
+</body>
+<script>
+    let Player = document.getElementsByTagName('div')[4];
+    let villan = document.getElementsByClassName('villan')[0]
+    let gameover = document.getElementsByClassName('gameover')[0]
+    let score = document.getElementsByClassName('score')[0]
+    let higest_score = document.getElementsByClassName('higest_score')[0]
+    let btn = document.getElementsByTagName('button')[0]
+    let cactus = document.getElementsByClassName('cactus')[0]
+    let tree = document.getElementsByClassName('tree1')[0]
+    let container=document.getElementsByClassName('conatiner')[0]
+
+
+    //-------------------------code for background music
+    let audioObj= new Audio('sound.mp3')
+    let audioObj1= new Audio('game_over.mp3')
+    audioObj.play()
+    
+    //---------------code for heigest score
+    let Heigest_score = 0
+    let heigest = 0
+    let all_score = JSON.parse(localStorage.getItem("score"))
+    console.log(all_score);
+    if (all_score != null) {
+        Array.from(all_score).forEach(element => {
+            if (parseInt(element) >= heigest) {
+                heigest = parseInt(element)
+            }
+
+        })
+        higest_score.innerText = "Higest Score: " + heigest
+    }
+
+    // ------------------ code for movement of player on up arrow key
+    let count = 0
+    let validity = true
+    container.onclick=()=>{
+        px = window.getComputedStyle(Player, null).getPropertyValue('bottom')
+        if(px == "0px"){
+        Player.classList.add("jump")
+        setTimeout(() => {
+                Player.classList.remove('jump')
+                count = 0;
+            }, 1300);}
+    }
+    document.onkeydown= (e) => {
+        px = window.getComputedStyle(Player, null).getPropertyValue('bottom')
+
+        if (e.keyCode == 38 && px == "0px") {
+            if (count) {
+                clearTimeout(time)
+                Player.classList.remove("jump")
+            }
+            count = 1
+            Player.classList.remove('dragdown')
+            Player.classList.add("jump")
+            time = setTimeout(() => {
+                Player.classList.remove('jump')
+                count = 0;
+            }, 1300);
+        }
+        if (e.keyCode == 40) {
+            Player.classList.remove("jump")
+            Player.classList.add("dragdown")
+            setTimeout(() => {
+                Player.classList.remove('dragdown')
+            }, 500);
+
+        }
+    }
+    // ----------------code for game over
+    let number = 0
+    setInterval(() => {
+        px = parseInt(window.getComputedStyle(Player, null).getPropertyValue('left'))
+        ox = parseInt(window.getComputedStyle(villan, null).getPropertyValue('left'))
+        py = parseInt(window.getComputedStyle(Player, null).getPropertyValue('bottom'))
+        player_x = window.getComputedStyle(Player, null).getPropertyValue('left')
+        player_y = window.getComputedStyle(Player, null).getPropertyValue('bottom')
+        tree_x = window.getComputedStyle(tree, null).getPropertyValue('left')
+        cactus_x = window.getComputedStyle(cactus, null).getPropertyValue('left')
+        villan_x = window.getComputedStyle(villan, null).getPropertyValue('left')
+        // console.log(ox);
+        if (ox >= -73 && ox <= 104 && py <= 147) {
+            gameover.style.visibility = "visible"
+            btn.style.visibility = "visible"
+            Player.classList.remove('animategirl')
+            villan.classList.remove('villan_animation')
+            cactus.classList.remove('cactus_animation')
+            tree.classList.remove('tree1_animation')
+            villan.style.left = villan_x
+            tree.style.left = tree_x
+            cactus.style.left = cactus_x
+            Player.style.left = player_x
+            Player.style.bottom = player_y
+            document.onkeydown = () => {
+                console.log("gameover");
+            }
+            container.onclick=()=>{
+                console.log("gameover");
+            }
+            audioObj.pause()
+            audioObj1.play()
+            
+
+        }
+        else if (ox <= -120) {
+            anispeed = parseFloat(window.getComputedStyle(villan, null).getPropertyValue('animation-duration'))
+            newdur = anispeed - 0.01
+            villan.style.animationDuration = newdur + "s";
+            number++
+            score.innerText = "Score: " + number;
+            Heigest_score = number
+
+        }
+    }, 10);
+
+    //------------ function to reload the page
+    btn.addEventListener("click", (e) => {
+        all_score = localStorage.getItem("score")
+        let obj
+        if (all_score == null) {
+            obj = []
+        }
+        else {
+            obj = JSON.parse(all_score)
+        }
+        obj.push(Heigest_score)
+        let obj1 = JSON.stringify(obj)
+        localStorage.setItem("score", obj1);
+        location.reload();
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&family=Balsamiq+Sans&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Balsamiq Sans', cursive;
+}
+.texture{
+    font-size: 2rem;
+}
+.conatiner{
+    background-image: url(background.jpg);
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    transition: none!important;
+    /* filter: invert(1); */
+    
+}
+.player{
+    height: 256px;
+    background-image: url(spritestrip-1536.png);
+    width: calc(1536px/6);
+    position: absolute;
+    bottom: 0;
+    
+    background-size: cover;
+    z-index: 2;
+}
+.animategirl{
+    animation: animategirl 1s steps(6) infinite ;
+}
+@keyframes animategirl{
+    form{
+        background-position: 0;
+    }
+    to{
+        background-position: 1536px;
+    }
+}
+.villan{
+    filter: none;
+    background-image: url(villan.png);
+    height: 10rem;
+    width: 11rem;
+    position: absolute;
+    bottom: -11px;
+    left: 100%;
+    background-size: cover;
+    z-index: 2;
+}
+.villan_animation{
+    animation: prash 3s linear infinite 2s;
+
+}
+@keyframes prash{
+    from{
+        left:100%
+    }
+    to{
+        left:-10%;
+    }
+}
+
+.cloudWithSun{
+    background-image: url(Sun_with_Cloud_PNG_Clip-Art_Image.png);
+    height: 12rem;
+    width: 14rem;
+    position: absolute;
+    left: 69%;
+    bottom: 49%;
+    background-size: cover;
+    
+}
+.tree1{
+    background-image:url(image-removebg-preview.png);
+    height: 12rem;
+    width: 14rem;
+    position: absolute;
+    bottom: 0;
+    left: 80%;
+    background-size: cover;
+    z-index: 1;
+}
+.tree1_animation{
+    animation: tree 4s linear infinite 2s;
+
+}
+.cactus{
+    background-image: url(cactus.png);
+    height: 12rem;
+    width: 14rem;
+    position: absolute;
+    bottom: -13px;
+    right: 80%;
+    background-size: cover;
+    z-index: 1;
+    
+}
+.cactus_animation{
+    animation: cactus 4s linear infinite 1s;
+}
+@keyframes tree{
+    from{
+        left:100%
+    }
+    to{
+        left:-10%;
+    }
+}
+@keyframes cactus{
+    from{
+        left:100%
+    }
+    to{
+        left:-10%;
+    }
+}
+
+.jump{
+    animation: jump 1.3s linear 1;
+}
+@keyframes jump{
+    0%{
+        bottom:0%;
+        
+    }
+    50%{
+        bottom:50%;
+    }
+    100%{
+        bottom:0%;
+    }
+}
+.dragdown{
+   transition-duration: 0.5s;
+   bottom: 0px;
+}
+.gameover{
+    font-family: 'Akaya Telivigala', cursive;
+    font-size: 5rem;
+    color: red;
+    align-self: center;
+    visibility: hidden;
+    margin-top: 3rem;
+    padding: 26px;
+    
+    
+   }
+   button{
+    align-self: center;
+    width: 9rem;
+    text-align: center;
+    height: 3rem;
+    font-size: 24px;
+    border-radius: 30px;
+    background-color: transparent;
+    z-index: 3;
+    background-image: linear-gradient(61deg,#7c7ca0, transparent);
+    font-family: 'Balsamiq Sans', cursive;
+    outline: none;
+    visibility: hidden;
+}
+button:hover{
+       background-image: linear-gradient(61deg,transparent,#7c7ca0);
+
+   }
